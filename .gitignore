@@ -4,5 +4,5 @@ cache
 coverage
 coverage.json
 deployments/localhost
+dist
 node_modules
-typechain-types

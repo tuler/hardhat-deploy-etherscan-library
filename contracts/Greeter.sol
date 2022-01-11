@@ -1,13 +1,14 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
+import "./Math.sol";
 
 contract Greeter {
+    using Math for uint256;
+
     string private greeting;
 
     constructor(string memory _greeting) {
-        console.log("Deploying a Greeter with greeting:", _greeting);
         greeting = _greeting;
     }
 
@@ -16,7 +17,6 @@ contract Greeter {
     }
 
     function setGreeting(string memory _greeting) public {
-        console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
         greeting = _greeting;
     }
 }
