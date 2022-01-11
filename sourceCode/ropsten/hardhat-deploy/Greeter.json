@@ -1,0 +1,25 @@
+{
+  "language": "Solidity",
+  "settings": {
+    "evmVersion": "london",
+    "libraries": {
+      "contracts/Greeter.sol:Greeter": {
+        "Math": "0x155249849d1c0640DA809a8c7C4C4c9cd7b3bde3"
+      }
+    },
+    "metadata": { "bytecodeHash": "ipfs", "useLiteralContent": true },
+    "optimizer": { "enabled": false, "runs": 200 },
+    "remappings": []
+  },
+  "sources": {
+    "contracts/Greeter.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport \"./Util.sol\";\n\ncontract Greeter {\n    using Util for uint256;\n\n    string private greeting;\n\n    constructor(string memory _greeting) {\n        greeting = _greeting;\n    }\n\n    function greet() public view returns (string memory) {\n        return greeting;\n    }\n\n    function setGreeting(string memory _greeting) public {\n        greeting = _greeting;\n    }\n}\n"
+    },
+    "contracts/Math.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nlibrary Math {\n    function isEven(uint256 n) public pure returns (bool) {\n        return n % 2 == 0;\n    }\n}\n"
+    },
+    "contracts/Util.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
+    }
+  }
+}
