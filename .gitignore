@@ -4,5 +4,6 @@ cache
 coverage
 coverage.json
 deployments/localhost
+deployments/*/solcInputs/*.json
 dist
 node_modules

@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import { HardhatUserConfig } from "hardhat/config";
 import { HttpNetworkUserConfig } from "hardhat/types";
 
-// import "@nomiclabs/hardhat-etherscan";
+import "@nomiclabs/hardhat-etherscan";
 import "hardhat-deploy";
 
 dotenv.config();

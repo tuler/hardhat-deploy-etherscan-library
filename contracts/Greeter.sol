@@ -1,10 +1,10 @@
 //SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import "./Math.sol";
+import "./Util.sol";
 
 contract Greeter {
-    using Math for uint256;
+    using Util for uint256;
 
     string private greeting;
 

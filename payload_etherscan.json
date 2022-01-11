@@ -1,0 +1,31 @@
+{
+  "language": "Solidity",
+  "settings": {
+    "optimizer": { "enabled": false, "runs": 200 },
+    "libraries": {
+      "contracts/Math.sol": {
+        "Math": "0x8977457936461132c9c7abd3735ba6f3b6e7ef29"
+      }
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata"
+        ],
+        "": ["ast"]
+      }
+    }
+  },
+  "sources": {
+    "contracts/Math.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nlibrary Math {\n    function isEven(uint256 n) public pure returns (bool) {\n        return n % 2 == 0;\n    }\n}\n"
+    },
+    "contracts/Util.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
+    }
+  }
+}
