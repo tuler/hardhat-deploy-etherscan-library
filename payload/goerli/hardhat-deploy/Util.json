@@ -1,0 +1,11 @@
+{
+  "apikey": "XXXX REDACTED XXXX",
+  "module": "contract",
+  "action": "verifysourcecode",
+  "contractaddress": "0xCE5e6197b9D7caAbC3D979B85b7AFa18BD5245b9",
+  "sourceCode": "{\"language\":\"Solidity\",\"settings\":{\"evmVersion\":\"london\",\"libraries\":{\"contracts/Util.sol:Util\":{\"Math\":\"0x8977457936461132c9c7abD3735bA6f3B6E7ef29\"}},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Math.sol\":{\"content\":\"//SPDX-License-Identifier: Apache-2.0\\npragma solidity ^0.8.0;\\n\\nlibrary Math {\\n    function isEven(uint256 n) public pure returns (bool) {\\n        return n % 2 == 0;\\n    }\\n}\\n\"},\"contracts/Util.sol\":{\"content\":\"//SPDX-License-Identifier: Apache-2.0\\npragma solidity ^0.8.0;\\n\\nimport \\\"./Math.sol\\\";\\n\\nlibrary Util {\\n    using Math for uint256;\\n\\n    function isOdd(uint256 n) public pure returns (bool) {\\n        return !Math.isEven(n);\\n    }\\n}\\n\"}}}",
+  "codeformat": "solidity-standard-json-input",
+  "contractname": "contracts/Util.sol:Util",
+  "compilerversion": "v0.8.11+commit.d7f03943",
+  "licenseType": 12
+}
