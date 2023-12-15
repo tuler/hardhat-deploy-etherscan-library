@@ -3,9 +3,13 @@
   "sources": {
     "contracts/Math.sol": {
       "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nlibrary Math {\n    function isEven(uint256 n) public pure returns (bool) {\n        return n % 2 == 0;\n    }\n}\n"
+    },
+    "contracts/Util.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport {Math} from \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
     }
   },
   "settings": {
+    "evmVersion": "paris",
     "optimizer": { "enabled": false, "runs": 200 },
     "outputSelection": {
       "*": {
@@ -24,6 +28,10 @@
       }
     },
     "metadata": { "useLiteralContent": true },
-    "libraries": {}
+    "libraries": {
+      "contracts/Math.sol": {
+        "Math": "0x86d8a35a49e64d61fe8c0ebe3c0145a0f865c02c"
+      }
+    }
   }
 }

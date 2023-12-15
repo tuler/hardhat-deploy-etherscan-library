@@ -8,29 +8,30 @@ MNEMONIC="<mnemonic>"
 npx hardhat deploy --network <network>
 ```
 
-The contracts (and libraries) are already deployed to the `goerli` network.
+The contracts (and libraries) are already deployed to the `sepolia` network.
 
-# Verification
+## Verification
 
-To verify the goerli contracts:
+To verify the sepolia contracts:
 
 ```shell
-npx hardhat --network goerli etherscan-verify --api-key <etherscan_api_key>
+npx hardhat --network sepolia etherscan-verify --api-key <etherscan_api_key>
 ```
 
+The `Greeter` and `Math` contracts are verified successfully.
 The request that is being sent to verify the `Util` library is the following:
 
 ```json
-Failed to verify contract Util: NOTOK, Fail - Unable to verify
+Failed to verify contract Util: NOTOK, Fail - Unable to verify. Please check for missing Library or invalid name (i.e names are case senstive). Library was required but suitable match not found
 {
   "apikey": "XXXXXX",
   "module": "contract",
   "action": "verifysourcecode",
-  "contractaddress": "0xCE5e6197b9D7caAbC3D979B85b7AFa18BD5245b9",
+  "contractaddress": "0xCb199A11D9ace8493C55A238AD9AdDa633947824",
   "sourceCode": "...",
   "codeformat": "solidity-standard-json-input",
   "contractname": "contracts/Util.sol:Util",
-  "compilerversion": "v0.8.11+commit.d7f03943",
+  "compilerversion": "v0.8.23+commit.f704f362",
   "licenseType": 12
 }
 ```
@@ -41,10 +42,10 @@ The sourceCode payload that is being sent is the following:
 {
   "language": "Solidity",
   "settings": {
-    "evmVersion": "london",
+    "evmVersion": "paris",
     "libraries": {
       "contracts/Util.sol:Util": {
-        "Math": "0x8977457936461132c9c7abD3735bA6f3B6E7ef29"
+        "Math": "0x86D8a35a49e64D61Fe8c0eBE3c0145a0f865c02c"
       }
     },
     "metadata": { "bytecodeHash": "ipfs", "useLiteralContent": true },
@@ -56,31 +57,35 @@ The sourceCode payload that is being sent is the following:
       "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nlibrary Math {\n    function isEven(uint256 n) public pure returns (bool) {\n        return n % 2 == 0;\n    }\n}\n"
     },
     "contracts/Util.sol": {
-      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport {Math} from \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
     }
   }
 }
 ```
 
-## Etherscan plugin
+## Verify plugin
 
-Etherscan plugin sends a different payload, which actually works.
+Verify plugin sends a different payload, which actually works.
 
 ```shell
 export ETHERSCAN_API_KEY=<etherscan_api_key>
-npx hardhat verify --network goerli 0xCE5e6197b9D7caAbC3D979B85b7AFa18BD5245b9
+npx hardhat verify --network sepolia 0xCb199A11D9ace8493C55A238AD9AdDa633947824
 ```
 
 ```json
 {
   "language": "Solidity",
-  "settings": {
-    "optimizer": { "enabled": false, "runs": 200 },
-    "libraries": {
-      "contracts/Math.sol": {
-        "Math": "0x8977457936461132c9c7abd3735ba6f3b6e7ef29"
-      }
+  "sources": {
+    "contracts/Math.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nlibrary Math {\n    function isEven(uint256 n) public pure returns (bool) {\n        return n % 2 == 0;\n    }\n}\n"
     },
+    "contracts/Util.sol": {
+      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport {Math} from \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "evmVersion": "paris",
+    "optimizer": { "enabled": false, "runs": 200 },
     "outputSelection": {
       "*": {
         "*": [
@@ -88,18 +93,20 @@ npx hardhat verify --network goerli 0xCE5e6197b9D7caAbC3D979B85b7AFa18BD5245b9
           "evm.bytecode",
           "evm.deployedBytecode",
           "evm.methodIdentifiers",
-          "metadata"
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
         ],
         "": ["ast"]
       }
-    }
-  },
-  "sources": {
-    "contracts/Math.sol": {
-      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nlibrary Math {\n    function isEven(uint256 n) public pure returns (bool) {\n        return n % 2 == 0;\n    }\n}\n"
     },
-    "contracts/Util.sol": {
-      "content": "//SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\nimport \"./Math.sol\";\n\nlibrary Util {\n    using Math for uint256;\n\n    function isOdd(uint256 n) public pure returns (bool) {\n        return !Math.isEven(n);\n    }\n}\n"
+    "metadata": { "useLiteralContent": true },
+    "libraries": {
+      "contracts/Math.sol": {
+        "Math": "0x86d8a35a49e64d61fe8c0ebe3c0145a0f865c02c"
+      }
     }
   }
 }
@@ -110,12 +117,12 @@ Most importantly the following is the main difference:
 ```diff
      "libraries": {
 -      "contracts/Util.sol:Util": {
-         "Math": "0x8977457936461132c9c7abD3735bA6f3B6E7ef29"
+         "Math": "0x86D8a35a49e64D61Fe8c0eBE3c0145a0f865c02c"
        }
      },
      "libraries": {
 +      "contracts/Math.sol": {
-         "Math": "0x8977457936461132c9c7abd3735ba6f3b6e7ef29"
+         "Math": "0x86d8a35a49e64d61fe8c0ebe3c0145a0f865c02c"
        }
      },
 ```

@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import "./Math.sol";
+import {Math} from "./Math.sol";
 
 library Util {
     using Math for uint256;
